@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#playarea {
+    margin: 0 auto;
+    margin-top: 4vh;
+    height: 960px;
+    width: 1200px;
+    background: url(../img/field1.jpg);
+    border: black 1px solid;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    /*---- BACKGROUND IMAGE ----*/
+    background: url("../img/background.jpg") center center fixed;
+    background-size: cover;
+    background-position: center;
+    /*---- CENTER MAIN WINDOW ----*/
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+    z-index: -10;
+}
