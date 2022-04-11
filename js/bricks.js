@@ -174,6 +174,7 @@ function drawIt() {
         if (paddelBounceCount > 10) {
             powerup = true;
             powerbar.style.backgroundColor = 'yellow';
+            powerbar.style.width = '100%';
         } else if (paddelBounceCount < 10) {
             powerup = false;
             powerbar.style.width = (powerbarSize * paddelBounceCount) + '%';
