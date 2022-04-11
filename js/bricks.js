@@ -1,8 +1,9 @@
 function drawIt() {
+    var powerbar = document.getElementById('powerbar');
     var x = 200,
         y = 200,
-        dx = 5,
-        dy = 0,
+        dx = 4,
+        dy = 1,
         WIDTH,
         HEIGHT,
         r = 10,
@@ -26,7 +27,9 @@ function drawIt() {
         colwidth,
         countToFinish = 0,
         paddelBounceCount = 0,
-        powerup = false;
+        powerup = false,
+        powerupActive = false,
+        powerbarSize = 10;
 
     var brick = new Image();
     brick.src = "img/deepslate_brick.png";
@@ -51,18 +54,18 @@ function drawIt() {
 
     }
 
-    function startAnim() {
-        while (true) {
-            print("anim");
-            delay(100);
-            ctx.drawImage(cannon, HEIGHT / 2 + 161, cannonX, 689, 323);
-            cannonX += cannonDX;
-        }
-    }
+    // function startAnim() {
+    //     while (true) {
+    //         print("anim");
+    //         delay(100);
+    //         ctx.drawImage(cannon, HEIGHT / 2 + 161, cannonX, 689, 323);
+    //         cannonX += cannonDX;
+    //     }
+    // }
 
-    function delay(time) {
-        return new Promise(resolve => setTimeout(resolve, time));
-    }
+    // function delay(time) {
+    //     return new Promise(resolve => setTimeout(resolve, time));
+    // }
 
     function init_paddle() {
         paddley = HEIGHT / 2;
@@ -94,14 +97,7 @@ function drawIt() {
         if (countToFinish <= 0) {
             console.log("finish")
         }
-        if (paddelBounceCount % 10 == 0) {
-            powerup = true;
-            circle(x, y, r, 'red'); // Zogica
-        } else {
-            powerup = false;
-            circle(x, y, r, 'black'); // Zogica
-        }
-
+        powerupDestroy();
 
         if (downDown) { //paddel movment arows in omejevanje
             if ((paddley + paddleh) < HEIGHT) {
@@ -140,14 +136,12 @@ function drawIt() {
         row = Math.floor((y + dy * 7.5) / rowheight);
         col = Math.floor(((WIDTH - x) - dx * 2.5) / colwidth);
 
-        // if (col < 0) col = 0;
-        // if (col > NCOLS) col = NCOLS - 1;
         if (row < 0) row = 0;
         if (row > NROWS - 1) row = NROWS - 1;
 
         //Če smo zadeli opeko, vrni povratno kroglo in označi v tabeli, da opeke ni več
         if (bricks[row][col] > 0) {
-            if (!powerup)
+            if (!powerupActive)
                 if (beforerow < row || beforerow > row) {
                     dy = -dy;
                 } else {
@@ -167,6 +161,7 @@ function drawIt() {
             if (y > (paddley + paddleh / 4) && y < paddley + paddleh) {
                 dy = 6 * ((y - ((paddley + paddleh / 4) + paddleh / 3)) / paddleh);
                 dx = -dx;
+                powerupActive = false;
                 paddelBounceCount++;
             } else
                 clearInterval(inter);
@@ -175,11 +170,30 @@ function drawIt() {
         y += dy;
     }
 
+    function powerupDestroy() {
+        if (paddelBounceCount > 10) {
+            powerup = true;
+            powerbar.style.backgroundColor = 'yellow';
+        } else if (paddelBounceCount < 10) {
+            powerup = false;
+            powerbar.style.width = (powerbarSize * paddelBounceCount) + '%';
+            powerbar.style.backgroundColor = 'blue';
+        }
+        if (powerupActive)
+            circle(x, y, r, 'red'); // Zogica
+        else
+            circle(x, y, r, 'black'); // Zogica
+    }
+
     function onKeyDown(evt) {
         if (evt.keyCode == 38 || evt.keyCode == 87)
             upDown = true;
         else if (evt.keyCode == 40 || evt.keyCode == 83)
             downDown = true;
+        else if (evt.keyCode == 32 && powerup) {
+            powerupActive = true;
+            paddelBounceCount = 0;
+        }
     }
 
     function onKeyUp(evt) {
@@ -221,7 +235,7 @@ function drawIt() {
     $(document).keyup(onKeyUp);
     // $(document).mousemove(onMouseMove);
 
-    var inter = init();
+    init();
     // init_mouse();
     initbricks();
 }
