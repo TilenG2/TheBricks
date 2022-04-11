@@ -40,6 +40,7 @@ function drawIt() {
         WIDTH = $("#canv").width();
         HEIGHT = $("#canv").height();
         init_paddle();
+        console.log("start");
         return setInterval(draw, 10);
 
     }
@@ -145,7 +146,7 @@ function drawIt() {
             dx = -dx;
         else if (x + dx - paddlew < r) { //odboj od ploscka
             if (y > (paddley + paddleh / 4) && y < paddley + paddleh) {
-                dy = 6 * ((y - ((paddley + paddleh / 4) + paddleh / 2)) / paddleh);
+                dy = 6 * ((y - ((paddley + paddleh / 4) + paddleh / 3)) / paddleh);
                 dx = -dx;
                 paddelBounceCount++;
             } else
@@ -156,16 +157,16 @@ function drawIt() {
     }
 
     function onKeyDown(evt) {
-        if (evt.keyCode == 38)
+        if (evt.keyCode == 38 || evt.keyCode == 87)
             upDown = true;
-        else if (evt.keyCode == 40)
+        else if (evt.keyCode == 40 || evt.keyCode == 83)
             downDown = true;
     }
 
     function onKeyUp(evt) {
-        if (evt.keyCode == 38)
+        if (evt.keyCode == 38 || evt.keyCode == 87)
             upDown = false;
-        else if (evt.keyCode == 40)
+        else if (evt.keyCode == 40 || evt.keyCode == 83)
             downDown = false;
     }
 
