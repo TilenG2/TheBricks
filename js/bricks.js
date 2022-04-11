@@ -35,14 +35,33 @@ function drawIt() {
     var knight = new Image();
     knight.src = "img/knight.png";
 
+
+    var cannon = new Image();
+    cannon.src = "img/cannon.png";
+    var cannonDX = 5,
+        cannonX = -689;
+
     function init() {
         ctx = $('#canv')[0].getContext("2d");
         WIDTH = $("#canv").width();
         HEIGHT = $("#canv").height();
         init_paddle();
-        console.log("start");
+        // startAnim();
         return setInterval(draw, 10);
 
+    }
+
+    function startAnim() {
+        while (true) {
+            print("anim");
+            delay(100);
+            ctx.drawImage(cannon, HEIGHT / 2 + 161, cannonX, 689, 323);
+            cannonX += cannonDX;
+        }
+    }
+
+    function delay(time) {
+        return new Promise(resolve => setTimeout(resolve, time));
     }
 
     function init_paddle() {
