@@ -5,9 +5,9 @@
 
 #playarea {
     margin: 0 auto;
-    margin-top: 4vh;
-    height: 960px;
-    width: 1200px;
+    margin-top: 3vh;
+    height: 648px;
+    width: 810px;
     background: url(../img/field1.jpg);
     border: black 1px solid;
 }

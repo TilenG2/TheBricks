@@ -1,11 +1,11 @@
 function drawIt() {
     var x = 200,
         y = 200,
-        dx = 4,
-        dy = 1,
+        dx = 5,
+        dy = 0,
         WIDTH,
         HEIGHT,
-        r = 20,
+        r = 10,
         ctx,
         upDown = false,
         downDown = false,
@@ -19,7 +19,6 @@ function drawIt() {
         NCOLS,
         BRICKWIDTH,
         BRICKHEIGHT,
-        PADDING,
         row,
         col,
         beforerow,
@@ -47,14 +46,15 @@ function drawIt() {
 
     function init_paddle() {
         paddley = HEIGHT / 2;
-        paddleh = 150;
-        paddlew = 100;
+        paddleh = 100;
+        paddlew = 66;
     }
 
-    function circle(x, y, r) {
+    function circle(x, y, r, color) {
         ctx.beginPath();
         ctx.arc(x, y, r, 0, Math.PI * 2, true);
         ctx.closePath();
+        ctx.fillStyle = color;
         ctx.fill();
     }
 
@@ -74,11 +74,14 @@ function drawIt() {
         if (countToFinish <= 0) {
             console.log("finish")
         }
-        if (paddelBounceCount % 10 == 0)
+        if (paddelBounceCount % 10 == 0) {
             powerup = true;
-        else
+            circle(x, y, r, 'red'); // Zogica
+        } else {
             powerup = false;
-        circle(x, y, r); // Zogica
+            circle(x, y, r, 'black'); // Zogica
+        }
+
 
         if (downDown) { //paddel movment arows in omejevanje
             if ((paddley + paddleh) < HEIGHT) {
@@ -100,22 +103,22 @@ function drawIt() {
         for (i = 0; i < NROWS; i++) {
             for (j = 1; j <= NCOLS; j++) {
                 if (bricks[i][j - 1] == 2) {
-                    // rect((WIDTH - j * (BRICKWIDTH + PADDING)) + PADDING,
-                    //     (i * (BRICKHEIGHT + PADDING)) + PADDING,
+                    // rect((WIDTH - j * (BRICKWIDTH )) ,
+                    //     (i * (BRICKHEIGHT )) ,
                     //     BRICKWIDTH, BRICKHEIGHT);
-                    ctx.drawImage(brick, (WIDTH - j * (BRICKWIDTH + PADDING)) + PADDING, (i * (BRICKHEIGHT + PADDING)) + PADDING, BRICKWIDTH, BRICKHEIGHT);
+                    ctx.drawImage(brick, (WIDTH - j * (BRICKWIDTH)), (i * (BRICKHEIGHT)), BRICKWIDTH, BRICKHEIGHT);
                 } else if (bricks[i][j - 1] == 1) {
-                    ctx.drawImage(brickBreak, (WIDTH - j * (BRICKWIDTH + PADDING)) + PADDING, (i * (BRICKHEIGHT + PADDING)) + PADDING, BRICKWIDTH, BRICKHEIGHT);
+                    ctx.drawImage(brickBreak, (WIDTH - j * (BRICKWIDTH)), (i * (BRICKHEIGHT)), BRICKWIDTH, BRICKHEIGHT);
                 }
             }
         }
 
         //unicevanje opek
         beforerow = row;
-        rowheight = BRICKHEIGHT + PADDING; //Smo zadeli opeko?
-        colwidth = BRICKWIDTH + PADDING;
-        row = Math.floor((y + dy * 15) / rowheight);
-        col = Math.floor(((WIDTH - x) - dx * 5) / colwidth);
+        rowheight = BRICKHEIGHT; //Smo zadeli opeko?
+        colwidth = BRICKWIDTH;
+        row = Math.floor((y + dy * 7.5) / rowheight);
+        col = Math.floor(((WIDTH - x) - dx * 2.5) / colwidth);
 
         // if (col < 0) col = 0;
         // if (col > NCOLS) col = NCOLS - 1;
@@ -181,9 +184,8 @@ function drawIt() {
     function initbricks() { //inicializacija opek - polnjenje v tabelo
         NROWS = 15;
         NCOLS = 3;
-        BRICKWIDTH = 128;
-        BRICKHEIGHT = (HEIGHT / NROWS) - 1;
-        PADDING = 1;
+        BRICKWIDTH = 100;
+        BRICKHEIGHT = (HEIGHT / NROWS);
         bricks = new Array(NROWS);
         for (i = 0; i < NROWS; i++) {
             bricks[i] = new Array(NCOLS);
