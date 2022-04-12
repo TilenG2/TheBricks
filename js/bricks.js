@@ -166,6 +166,7 @@ function drawIt() {
             countToFinish--;
 
         }
+        //premik puscice
         if (arrowUP) {
             ctx.drawImage(arrow, arrowX, arrowY, 84, 8);
             arrowX += arrowDX;
@@ -179,13 +180,13 @@ function drawIt() {
 
         if (x + dx > WIDTH - r)
             dx = -dx;
-        else if (x + dx - paddlew < r) { //odboj od ploscka
+        else if ((x + dx - paddlew < r || x + dx - paddlew / 2 < r) && dx < 0) { //odboj od ploscka
             if (y > (paddley + paddleh / 4) && y < paddley + paddleh) {
                 dy = 6 * ((y - ((paddley + paddleh / 4) + paddleh / 3)) / paddleh);
                 dx = -dx;
                 powerupActive = false;
                 paddelBounceCount++;
-            } else
+            } else if (x + dx - paddlew / 2 < r)
                 clearInterval(inter);
         }
         x += dx;
