@@ -16,7 +16,6 @@
     background: url(../img/Playareabg.png);
     background-size: cover;
     background-position: -50px;
-    display: none;
 }
 
 html,
@@ -42,7 +41,7 @@ body {
     height: 20px;
     border-radius: 5px;
     border: solid black 3px;
-    display: none;
+    display: block;
     text-align: center;
     font-size: 20px;
     font-weight: bold;
@@ -74,4 +73,24 @@ button:focus {
     justify-content: center;
     flex-direction: column;
     height: 70vh
+}
+
+#credits {
+    display: none;
+    justify-content: center;
+    flex-direction: column;
+    height: 70vh
+}
+
+#rules {
+    display: none;
+    justify-content: center;
+    flex-direction: column;
+    height: 70vh
+}
+
+#game {
+    display: none;
+    justify-content: center;
+    flex-direction: column;
 }

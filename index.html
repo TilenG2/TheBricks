@@ -15,11 +15,19 @@
     <div id="playarea">
         <div id="menu">
             <button onclick="drawIt()">Play</button>
-            <button onclick="drawIt()">Rules</button>
-            <button onclick="drawIt()">Credits</button>
+            <button onclick="rules()">Rules</button>
+            <button onclick="credits()">Credits</button>
         </div>
-        <canvas id="canv" width="770" height="616"></canvas>
-        <div id="powerbar"></div>
+        <div id="credits">
+            <button onclick="back()">Back</button>
+        </div>
+        <div id="rules">
+            <button onclick="back()">Back</button>
+        </div>
+        <div id="game">
+            <canvas id="canv" width="770" height="616"></canvas>
+            <div id="powerbar"></div>
+        </div>
     </div>
 
 </body>

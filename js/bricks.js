@@ -1,8 +1,25 @@
-function drawIt() {
-    var powerbar = document.getElementById('powerbar');
-    powerbar.style = "display: block";
-    document.getElementById('canv').style = "display: block";
+function credits() {
     document.getElementById('menu').style = "display: none";
+    document.getElementById('credits').style = "display: flex";
+}
+
+function rules() {
+    document.getElementById('menu').style = "display: none";
+    document.getElementById('rules').style = "display: flex";
+}
+
+function back() {
+
+    document.getElementById('credits').style = "display: none";
+    document.getElementById('rules').style = "display: none";
+    document.getElementById('menu').style = "display: flex";
+}
+
+
+function drawIt() {
+    document.getElementById('game').style = "display: flex";
+    document.getElementById('menu').style = "display: none";
+    var powerbar = document.getElementById('powerbar');
     var x = 200,
         y = 200,
         dx = 4,
