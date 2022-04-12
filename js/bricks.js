@@ -38,6 +38,12 @@ function drawIt() {
     var knight = new Image();
     knight.src = "img/knight.png";
 
+    var arrow = new Image();
+    arrow.src = "img/arrow.png";
+    var arrowDX = -3,
+        arrowX,
+        arrowY,
+        arrowUP = false;
 
     var cannon = new Image();
     cannon.src = "img/cannon.png";
@@ -149,6 +155,17 @@ function drawIt() {
                 }
             bricks[row][col]--;
             countToFinish--;
+            if (!arrowUP) {
+                arrowUP = true;
+                arrowX = WIDTH;
+                arrowY = (row) * BRICKHEIGHT + BRICKHEIGHT / 2;
+            }
+        }
+        if (arrowUP) {
+            ctx.drawImage(arrow, arrowX, arrowY, 84, 8);
+            arrowX += arrowDX;
+            if (arrowX <= 0)
+                arrowUP = false;
         }
 
         //odboj zogice
