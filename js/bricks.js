@@ -202,6 +202,7 @@ function drawIt() {
             powerup = false;
             powerbar.style.width = (powerbarSize * paddelBounceCount) + '%';
             powerbar.style.backgroundColor = '#24FF00';
+            powerbar.innerHTML = "";
         }
         if (powerupActive)
             circle(x, y, r, 'red'); // Zogica
