@@ -170,9 +170,14 @@ function drawIt() {
         if (arrowUP) {
             ctx.drawImage(arrow, arrowX, arrowY, 84, 8);
             arrowX += arrowDX;
-            if (arrowX <= 0)
+            if (arrowX <= paddlew / 3) {
                 arrowUP = false;
+                arrowX = WIDTH;
+            }
         }
+
+        if (arrowX <= paddlew / 1.5 && arrowY > paddley && arrowY < paddley + paddleh)
+            clearInterval(inter);
 
         //odboj zogice
         if (y + dy > HEIGHT - r || y + dy < r)
