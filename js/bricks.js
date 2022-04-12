@@ -95,7 +95,7 @@ function drawIt() {
     function draw() {
         clear();
         if (countToFinish <= 0) {
-            console.log("finish")
+            console.log("finish");
         }
         powerupDestroy();
 
@@ -236,7 +236,7 @@ function drawIt() {
     $(document).keyup(onKeyUp);
     // $(document).mousemove(onMouseMove);
 
-    init();
+    var inter = init();
     // init_mouse();
     initbricks();
 }
