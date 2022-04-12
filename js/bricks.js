@@ -66,7 +66,7 @@ function drawIt(difficulty) {
         arrowUP = false;
 
     switch (difficulty) {
-        case 'hard':
+        case 3:
             arrowDX = -5;
             break;
         default:
@@ -182,7 +182,7 @@ function drawIt(difficulty) {
                     dx = -dx;
                 }
                 switch (difficulty) {
-                    case 'medium':
+                    case 2:
                         if (!arrowUP) {
                             arrowUP = true;
                             arrowX = WIDTH;
@@ -200,7 +200,7 @@ function drawIt(difficulty) {
         }
         //premik puscice
         switch (difficulty) {
-            case 'medium':
+            case 2:
                 if (arrowUP) {
                     ctx.drawImage(arrow, arrowX, arrowY, 84, 8);
                     arrowX += arrowDX;
@@ -210,7 +210,7 @@ function drawIt(difficulty) {
                     }
                 }
                 break;
-            case 'hard':
+            case 3:
                 if (arrowUP) {
                     ctx.drawImage(arrow, arrowX, arrowY, 84, 8);
                     arrowX += arrowDX;
