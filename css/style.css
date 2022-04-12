@@ -8,7 +8,7 @@
 #playarea {
     margin: 0 auto;
     margin-top: 3vh;
-    height: 646px;
+    /* height: 646px; */
 }
 
 #canv {
@@ -16,6 +16,7 @@
     background: url(../img/Playareabg.png);
     background-size: cover;
     background-position: -50px;
+    display: none;
 }
 
 html,
@@ -37,8 +38,40 @@ body {
 }
 
 #powerbar {
-    background-color: green;
     width: 0px;
-    height: 10px;
-    border: solid black 1px;
+    height: 20px;
+    border-radius: 5px;
+    border: solid black 3px;
+    display: none;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+button {
+    background: url(../img/button1.jpg);
+    background-size: 100% 100%;
+    font-size: 35px;
+    padding: 7px 15px;
+    text-align: center;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+button:hover {
+    background: url(../img/button2.jpg);
+    background-size: 100% 100%;
+    color: lightgrey;
+}
+
+button:hover,
+button:focus {
+    outline: none;
+}
+
+#menu {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 70vh
 }

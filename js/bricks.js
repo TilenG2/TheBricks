@@ -1,5 +1,8 @@
 function drawIt() {
     var powerbar = document.getElementById('powerbar');
+    powerbar.style = "display: block";
+    document.getElementById('canv').style = "display: block";
+    document.getElementById('menu').style = "display: none";
     var x = 200,
         y = 200,
         dx = 4,
@@ -75,8 +78,8 @@ function drawIt() {
 
     function init_paddle() {
         paddley = HEIGHT / 2;
-        paddleh = 100;
-        paddlew = 66;
+        paddleh = 127.5;
+        paddlew = 85;
     }
 
     function circle(x, y, r, color) {
@@ -147,19 +150,21 @@ function drawIt() {
 
         //Če smo zadeli opeko, vrni povratno kroglo in označi v tabeli, da opeke ni več
         if (bricks[row][col] > 0) {
-            if (!powerupActive)
+            if (!powerupActive) {
                 if (beforerow < row || beforerow > row) {
                     dy = -dy;
                 } else {
                     dx = -dx;
                 }
+                if (!arrowUP) {
+                    arrowUP = true;
+                    arrowX = WIDTH;
+                    arrowY = (row) * BRICKHEIGHT + BRICKHEIGHT / 2;
+                }
+            }
             bricks[row][col]--;
             countToFinish--;
-            if (!arrowUP) {
-                arrowUP = true;
-                arrowX = WIDTH;
-                arrowY = (row) * BRICKHEIGHT + BRICKHEIGHT / 2;
-            }
+
         }
         if (arrowUP) {
             ctx.drawImage(arrow, arrowX, arrowY, 84, 8);
@@ -188,14 +193,15 @@ function drawIt() {
     }
 
     function powerupDestroy() {
-        if (paddelBounceCount > 10) {
+        if (paddelBounceCount >= 10) {
             powerup = true;
-            powerbar.style.backgroundColor = 'yellow';
+            powerbar.style.backgroundColor = '#FFF800';
             powerbar.style.width = '100%';
+            powerbar.innerHTML = "Space";
         } else if (paddelBounceCount < 10) {
             powerup = false;
             powerbar.style.width = (powerbarSize * paddelBounceCount) + '%';
-            powerbar.style.backgroundColor = 'blue';
+            powerbar.style.backgroundColor = '#24FF00';
         }
         if (powerupActive)
             circle(x, y, r, 'red'); // Zogica
