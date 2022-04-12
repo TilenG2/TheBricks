@@ -78,8 +78,8 @@ function drawIt() {
 
     function init_paddle() {
         paddley = HEIGHT / 2;
-        paddleh = 127.5;
-        paddlew = 85;
+        paddleh = 121;
+        paddlew = 81;
     }
 
     function circle(x, y, r, color) {
