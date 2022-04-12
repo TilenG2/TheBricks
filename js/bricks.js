@@ -16,7 +16,7 @@ function back() {
 }
 
 
-function drawIt() {
+function drawIt(difficulty) {
     document.getElementById('game').style = "display: flex";
     document.getElementById('menu').style = "display: none";
     var powerbar = document.getElementById('powerbar');
@@ -64,6 +64,12 @@ function drawIt() {
         arrowX,
         arrowY,
         arrowUP = false;
+
+    switch (difficulty) {
+        case 'hard':
+            arrowDX = -5;
+            break;
+    }
 
     var cannon = new Image();
     cannon.src = "img/cannon.png";
@@ -173,24 +179,47 @@ function drawIt() {
                 } else {
                     dx = -dx;
                 }
-                if (!arrowUP) {
-                    arrowUP = true;
-                    arrowX = WIDTH;
-                    arrowY = (row) * BRICKHEIGHT + BRICKHEIGHT / 2;
+                switch (difficulty) {
+                    case 'medium':
+                        if (!arrowUP) {
+                            arrowUP = true;
+                            arrowX = WIDTH;
+                            arrowY = (row) * BRICKHEIGHT + BRICKHEIGHT / 2;
+                        }
+                        break;
                 }
+
             }
             bricks[row][col]--;
             countToFinish--;
 
         }
         //premik puscice
-        if (arrowUP) {
-            ctx.drawImage(arrow, arrowX, arrowY, 84, 8);
-            arrowX += arrowDX;
-            if (arrowX <= paddlew / 3) {
-                arrowUP = false;
-                arrowX = WIDTH;
-            }
+        switch (difficulty) {
+            case 'medium':
+                if (arrowUP) {
+                    ctx.drawImage(arrow, arrowX, arrowY, 84, 8);
+                    arrowX += arrowDX;
+                    if (arrowX <= paddlew / 3) {
+                        arrowUP = false;
+                        arrowX = WIDTH;
+                    }
+                }
+                break;
+            case 'hard':
+                if (arrowUP) {
+                    ctx.drawImage(arrow, arrowX, arrowY, 84, 8);
+                    arrowX += arrowDX;
+                    if (arrowX <= paddlew / 3) {
+                        arrowUP = false;
+                        arrowX = WIDTH;
+                    }
+                } else {
+                    arrowUP = true;
+                    arrowX = WIDTH;
+                    arrowY = y;
+                }
+                break;
         }
 
         if (arrowX <= paddlew / 1.5 && arrowY > paddley && arrowY < paddley + paddleh)
