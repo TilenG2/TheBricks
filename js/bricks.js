@@ -69,6 +69,8 @@ function drawIt(difficulty) {
         case 'hard':
             arrowDX = -5;
             break;
+        default:
+            break;
     }
 
     var cannon = new Image();
@@ -187,6 +189,8 @@ function drawIt(difficulty) {
                             arrowY = (row) * BRICKHEIGHT + BRICKHEIGHT / 2;
                         }
                         break;
+                    default:
+                        break;
                 }
 
             }
@@ -219,6 +223,8 @@ function drawIt(difficulty) {
                     arrowX = WIDTH;
                     arrowY = y;
                 }
+                break;
+            default:
                 break;
         }
 
