@@ -1,24 +1,46 @@
 function credits() {
     document.getElementById('menu').style = "display: none";
+    document.getElementById('difficulty').style = "display: none";
     document.getElementById('credits').style = "display: flex";
 }
 
 function rules() {
     document.getElementById('menu').style = "display: none";
+    document.getElementById('difficulty').style = "display: none";
     document.getElementById('rules').style = "display: flex";
 }
 
 function back() {
-
+    document.getElementById('difficulty').style = "display: block";
     document.getElementById('credits').style = "display: none";
     document.getElementById('rules').style = "display: none";
     document.getElementById('menu').style = "display: flex";
 }
+var difficulty = 1;
+
+function diffselect(dif) {
+    difficulty = dif;
+    document.getElementById("easy").classList.remove("selected");
+    document.getElementById("medium").classList.remove("selected");
+    document.getElementById("hard").classList.remove("selected");
+    switch (dif) {
+        case 1:
+            document.getElementById("easy").classList.add("selected");
+            break;
+        case 2:
+            document.getElementById("medium").classList.add("selected");
+            break;
+        case 3:
+            document.getElementById("hard").classList.add("selected");
+            break;
+    }
+}
 
 
-function drawIt(difficulty) {
+function drawIt() {
     document.getElementById('game').style = "display: flex";
     document.getElementById('menu').style = "display: none";
+    document.getElementById('difficulty').style = "display: none";
     var powerbar = document.getElementById('powerbar');
     var x = 200,
         y = 200,
@@ -59,7 +81,7 @@ function drawIt(difficulty) {
     knight.src = "img/knight.png";
 
     var arrow = new Image();
-    arrow.src = "img/arrow.png";
+    arrow.src = "img/arrow1.png";
     var arrowDX = -3,
         arrowX,
         arrowY,
@@ -202,7 +224,7 @@ function drawIt(difficulty) {
         switch (difficulty) {
             case 2:
                 if (arrowUP) {
-                    ctx.drawImage(arrow, arrowX, arrowY, 84, 8);
+                    ctx.drawImage(arrow, arrowX, arrowY, 84, 10);
                     arrowX += arrowDX;
                     if (arrowX <= paddlew / 3) {
                         arrowUP = false;
@@ -212,7 +234,7 @@ function drawIt(difficulty) {
                 break;
             case 3:
                 if (arrowUP) {
-                    ctx.drawImage(arrow, arrowX, arrowY, 84, 8);
+                    ctx.drawImage(arrow, arrowX, arrowY, 84, 10);
                     arrowX += arrowDX;
                     if (arrowX <= paddlew / 3) {
                         arrowUP = false;

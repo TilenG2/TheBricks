@@ -8,7 +8,8 @@
 #playarea {
     margin: 0 auto;
     margin-top: 3vh;
-    /* height: 646px; */
+    justify-content: center;
+    align-items: center;
 }
 
 #canv {
@@ -16,6 +17,7 @@
     background: url(../img/Playareabg.png);
     background-size: cover;
     background-position: -50px;
+    border-radius: 5px;
 }
 
 html,
@@ -26,9 +28,9 @@ body {
 
 body {
     /*---- BACKGROUND IMAGE ----*/
-    background: url("../img/background.jpg") center center fixed;
+    background: url("../img/background.jpg");
     background-size: cover;
-    background-position: center;
+    /* background-position: center; */
     /*---- CENTER MAIN WINDOW ----*/
     display: flex;
     justify-content: center;
@@ -54,13 +56,25 @@ button {
     padding: 7px 15px;
     text-align: center;
     font-weight: bold;
-    margin: 20px 0;
+    margin-bottom: 4vh;
+}
+
+.buttons {
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: column;
 }
 
 button:hover {
     background: url(../img/button2.jpg);
     background-size: 100% 100%;
     color: lightgrey;
+}
+
+.selected {
+    background: url(../img/button2.jpg);
+    background-size: 100% 100%;
+    color: rgb(210, 202, 151);
 }
 
 button:hover,
@@ -70,9 +84,8 @@ button:focus {
 
 #menu {
     display: flex;
-    justify-content: center;
     flex-direction: column;
-    height: 70vh
+    height: 63vh
 }
 
 #credits {
@@ -94,3 +107,40 @@ button:focus {
     justify-content: center;
     flex-direction: column;
 }
+
+#difficulty {
+    display: block;
+}
+
+.title {
+    background: url(../img/banner.png) no-repeat;
+    width: 100%;
+    background-size: 45vh;
+    background-position: center;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    text-align: center;
+    font-size: 3vh;
+    font-weight: bold;
+    line-height: 8vh;
+    height: 10vh;
+}
+
+#game .title {
+    margin-bottom: 2vh;
+}
+
+
+/* .titlegame {
+    background: url(../img/banner.png) no-repeat;
+    width: 100%;
+    background-size: 45vh;
+    background-position: center;
+    margin-top: 5vh;
+    margin-bottom: 2vh;
+    text-align: center;
+    font-size: 3vh;
+    font-weight: bold;
+    line-height: 8vh;
+    height: 10vh;
+} */

@@ -4,7 +4,7 @@
 <head>
     <link rel="stylesheet" href="css/style.css" />
     <meta charset="UTF-8">
-    <title>MedivalBricks</title>
+    <title>MedievalBricks</title>
     <link rel='ICON' href="img/shield.ico" />
 </head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -14,17 +14,28 @@
 
     <div id="playarea">
         <div id="menu">
-            <button onclick="drawIt(1)">Play</button>
-            <button onclick="rules()">Rules</button>
-            <button onclick="credits()">Credits</button>
+            <div class="title">Medieval Bricks</div>
+            <div class="buttons">
+                <button onclick="drawIt()">Play</button>
+                <button onclick="rules()">Rules</button>
+                <button onclick="credits()">Credits</button>
+            </div>
+        </div>
+        <div id="difficulty">
+            <button id="easy" class="selected" onclick="diffselect(1)">Easy</button>
+            <button id="medium" onclick="diffselect(2)">Medium</button>
+            <button id="hard" onclick="diffselect(3)">Hard</button>
         </div>
         <div id="credits">
+            <div class="title">Medieval Bricks</div>
             <button onclick="back()">Back</button>
         </div>
         <div id="rules">
+            <div class="title">Medieval Bricks</div>
             <button onclick="back()">Back</button>
         </div>
         <div id="game">
+            <div class="title">Medieval Bricks</div>
             <canvas id="canv" width="770" height="616"></canvas>
             <div id="powerbar"></div>
         </div>
