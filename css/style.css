@@ -112,14 +112,12 @@ button:focus {
 #credits {
     display: none;
     flex-direction: column;
-    height: 70vh;
     width: 43vh;
 }
 
 #rules {
     display: none;
     flex-direction: column;
-    height: 70vh;
     width: 43vh;
 }
 
@@ -138,6 +136,12 @@ button:focus {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    width: 43vh;
+}
+
+.content {
+    margin-top: 5vh;
+    height: 38vh;
     width: 43vh;
 }
 
@@ -163,6 +167,12 @@ button:focus {
     background: url(../img/lives.png);
     width: 30px;
     background-size: 30px 30px;
+}
+
+#credits p {
+    font-size: 4vh;
+    font-weight: bold;
+    text-align: center;
 }
 
 

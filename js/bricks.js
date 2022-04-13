@@ -16,7 +16,7 @@ function back() {
     document.getElementById('rules').style = "display: none";
     document.getElementById('menu').style = "display: flex";
 }
-var difficulty = 1;
+var difficulty = 2;
 
 function diffselect(dif) {
     difficulty = dif;
@@ -88,6 +88,7 @@ function drawIt() {
 
     var stoneHit = new Audio('sound/Stone_hit2.ogg');
     var stoneHitBig = new Audio('sound/Stone_dig2.ogg');
+    var woosh = new Audio('sound/woosh.mp3');
 
     var arrow = new Image();
     arrow.src = "img/arrow1.png";
@@ -235,6 +236,7 @@ function drawIt() {
                             arrowUP = true;
                             arrowX = WIDTH;
                             arrowY = (row) * BRICKHEIGHT + BRICKHEIGHT / 2;
+                            woosh.play();
                         }
                         break;
                     default:
@@ -272,6 +274,7 @@ function drawIt() {
                     arrowUP = true;
                     arrowX = WIDTH;
                     arrowY = y;
+                    woosh.play();
                 }
                 break;
             default:
