@@ -172,7 +172,7 @@ function drawIt() {
     function draw() {
         clear();
         if (countToFinish <= 0) {
-            console.log("finish");
+            win();
         }
         powerupDestroy();
 
@@ -373,6 +373,28 @@ function drawIt() {
         $(".swal2-content").css('color', 'white');
     }
 
+    function win() {
+        clearInterval(inter);
+        Swal.fire({
+            icon: 'success',
+            title: 'You won',
+            html: 'Redirecting to start',
+            background: 'black',
+            showConfirmButton: false,
+            timer: 5000,
+        }).then((result) => {
+            document.getElementById('menu').style = "display: flex";
+            document.getElementById('game').style = "display: none";
+            document.getElementById('bgimage2').style = "display: none";
+            document.getElementById('difficulty').style = "display: flex";
+        });
+        $(".swal2-title").css('color', 'white');
+        $(".swal2-title").css('font-size', '30px');
+        $(".swal2-html-container").css('color', 'white');
+        $(".swal2-html-container").css('font-size', '25px');
+        $(".swal2-content").css('color', 'white');
+    }
+
     // function init_mouse() {
     //     canvasMinY = $("#canv").offset().left + (paddleh / 2);
     //     canvasMaxY = canvasMinY + HEIGHT;
@@ -398,7 +420,7 @@ function drawIt() {
                 countToFinish += bricks[i][j];
             }
         }
-        countToFinish *= 0.9;
+        // countToFinish *=0.95;
     }
 
     $(document).keydown(onKeyDown);
