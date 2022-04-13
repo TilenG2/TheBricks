@@ -108,6 +108,11 @@ button:focus {
     flex-direction: column;
 }
 
+.game {
+    display: flex;
+    flex-direction: row;
+}
+
 #difficulty {
     display: block;
 }
@@ -128,6 +133,12 @@ button:focus {
 
 #game .title {
     margin-bottom: 2vh;
+}
+
+#health {
+    background: url(../img/lives.png);
+    width: 20px;
+    background-size: 20px 20px;
 }
 
 

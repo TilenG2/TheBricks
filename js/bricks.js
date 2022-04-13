@@ -42,6 +42,7 @@ function drawIt() {
     document.getElementById('menu').style = "display: none";
     document.getElementById('difficulty').style = "display: none";
     var powerbar = document.getElementById('powerbar');
+    var livebar = document.getElementById('health');
     var x = 200,
         y = 200,
         dx = 4,
@@ -71,7 +72,8 @@ function drawIt() {
         paddelBounceCount = 0,
         powerup = false,
         powerupActive = false,
-        powerbarSize = 10;
+        powerbarSize = 10,
+        lives;
 
     var brick = new Image();
     brick.src = "img/deepslate_brick.png";
@@ -92,6 +94,13 @@ function drawIt() {
     switch (difficulty) {
         case 3:
             arrowDX = -5;
+            lives = 2;
+            break;
+        case 2:
+            lives = 2;
+            break;
+        case 1:
+            lives = 3;
             break;
         default:
             break;
@@ -254,9 +263,14 @@ function drawIt() {
         }
 
         if (arrowX <= paddlew / 1.5 && arrowY > paddley && arrowY < paddley + paddleh)
-            clearInterval(inter);
+            if (lives > 1) {
+                lives--;
+                arrowUP = false;
+                arrowX = WIDTH;
+            } else
+                clearInterval(inter);
 
-        //odboj zogice
+            //odboj zogice
         if (y + dy > HEIGHT - r || y + dy < r)
             dy = -dy;
 
@@ -269,8 +283,13 @@ function drawIt() {
                 powerupActive = false;
                 paddelBounceCount++;
             } else if (x + dx - paddlew / 2 < r)
-                clearInterval(inter);
+                if (lives > 1) {
+                    lives--;
+                    dx = -dx;
+                } else
+                    clearInterval(inter);
         }
+        livebar.style.height = lives * 20 + 'px';
         x += dx;
         y += dy;
     }
