@@ -51,7 +51,7 @@ function drawIt() {
         dy = 1,
         WIDTH,
         HEIGHT,
-        r = 10,
+        r = 12.5,
         ctx,
         upDown = false,
         downDown = false,
@@ -83,8 +83,11 @@ function drawIt() {
     brickBreak.src = "img/deepslate_brick_break.png";
     var knight = new Image();
     knight.src = "img/knight.png";
+    var rock = new Image();
+    rock.src = "img/rock.png"
 
     var stoneHit = new Audio('sound/Stone_hit2.ogg');
+    var stoneHitBig = new Audio('sound/Stone_dig2.ogg');
 
     var arrow = new Image();
     arrow.src = "img/arrow1.png";
@@ -206,8 +209,14 @@ function drawIt() {
         beforerow = row;
         rowheight = BRICKHEIGHT; //Smo zadeli opeko?
         colwidth = BRICKWIDTH;
-        row = Math.floor((y + dy * 7.5) / rowheight);
-        col = Math.floor(((WIDTH - x) - dx * 2.5) / colwidth);
+        if (!powerupActive) {
+            row = Math.floor((y + dy * 9.4) / rowheight);
+            col = Math.floor(((WIDTH - x) - dx * 3.1) / colwidth);
+        } else {
+            row = Math.floor((y + dy * 14.1) / rowheight);
+            col = Math.floor(((WIDTH - x) - dx * 4.7) / colwidth);
+        }
+
 
         if (row < 0) row = 0;
         if (row > NROWS - 1) row = NROWS - 1;
@@ -231,9 +240,10 @@ function drawIt() {
                     default:
                         break;
                 }
+                stoneHit.play();
+            } else
+                stoneHitBig.play();
 
-            }
-            stoneHit.play();
             bricks[row][col]--;
             countToFinish--;
 
@@ -313,9 +323,11 @@ function drawIt() {
             powerbar.innerHTML = "";
         }
         if (powerupActive)
-            circle(x, y, r, '#cd3019'); // Zogica
+            ctx.drawImage(rock, x - r * 1.5, y - r * 1.5, r * 2 * 1.5, r * 2 * 1.5);
+        // circle(x, y, r, '#cd3019'); // Zogica
         else
-            circle(x, y, r, '#000'); // Zogica
+            ctx.drawImage(rock, x - r, y - r, r * 2, r * 2);
+        // circle(x, y, r, '#000'); // Zogica
     }
 
     function onKeyDown(evt) {
