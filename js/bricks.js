@@ -11,7 +11,7 @@ function rules() {
 }
 
 function back() {
-    document.getElementById('difficulty').style = "display: block";
+    document.getElementById('difficulty').style = "display: flex";
     document.getElementById('credits').style = "display: none";
     document.getElementById('rules').style = "display: none";
     document.getElementById('menu').style = "display: flex";
@@ -23,6 +23,7 @@ function diffselect(dif) {
     document.getElementById("easy").classList.remove("selected");
     document.getElementById("medium").classList.remove("selected");
     document.getElementById("hard").classList.remove("selected");
+
     switch (dif) {
         case 1:
             document.getElementById("easy").classList.add("selected");
@@ -41,6 +42,7 @@ function drawIt() {
     document.getElementById('game').style = "display: flex";
     document.getElementById('menu').style = "display: none";
     document.getElementById('difficulty').style = "display: none";
+    document.getElementById('bgimage2').style = "display: flex";
     var powerbar = document.getElementById('powerbar');
     var livebar = document.getElementById('health');
     var x = 200,
@@ -130,9 +132,13 @@ function drawIt() {
     //     }
     // }
 
-    // function delay(time) {
-    //     return new Promise(resolve => setTimeout(resolve, time));
-    // }
+    function delay(delayInms) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(2);
+            }, delayInms);
+        });
+    }
 
     function init_paddle() {
         paddley = HEIGHT / 2;
@@ -289,7 +295,7 @@ function drawIt() {
                 } else
                     end();
         }
-        livebar.style.height = lives * 20 + 'px';
+        livebar.style.height = lives * 30 + 'px';
         x += dx;
         y += dy;
     }
@@ -297,19 +303,19 @@ function drawIt() {
     function powerupDestroy() {
         if (paddelBounceCount >= 10) {
             powerup = true;
-            powerbar.style.backgroundColor = '#FFF800';
+            powerbar.style.backgroundColor = '#cd3019';
             powerbar.style.width = '100%';
             powerbar.innerHTML = "Space";
         } else if (paddelBounceCount < 10) {
             powerup = false;
             powerbar.style.width = (powerbarSize * paddelBounceCount) + '%';
-            powerbar.style.backgroundColor = '#24FF00';
+            powerbar.style.backgroundColor = '#d1c9b0';
             powerbar.innerHTML = "";
         }
         if (powerupActive)
-            circle(x, y, r, 'red'); // Zogica
+            circle(x, y, r, '#cd3019'); // Zogica
         else
-            circle(x, y, r, 'black'); // Zogica
+            circle(x, y, r, '#000'); // Zogica
     }
 
     function onKeyDown(evt) {
@@ -332,6 +338,24 @@ function drawIt() {
 
     function end() {
         clearInterval(inter);
+        Swal.fire({
+            icon: 'error',
+            title: 'You lost',
+            html: 'Redirecting to start',
+            background: 'black',
+            showConfirmButton: false,
+            timer: 5000,
+        }).then((result) => {
+            document.getElementById('menu').style = "display: flex";
+            document.getElementById('game').style = "display: none";
+            document.getElementById('bgimage2').style = "display: none";
+            document.getElementById('difficulty').style = "display: flex";
+        });
+        $(".swal2-title").css('color', 'white');
+        $(".swal2-title").css('font-size', '30px');
+        $(".swal2-html-container").css('color', 'white');
+        $(".swal2-html-container").css('font-size', '25px');
+        $(".swal2-content").css('color', 'white');
     }
 
     // function init_mouse() {
