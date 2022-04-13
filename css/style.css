@@ -175,6 +175,12 @@ button:focus {
     text-align: center;
 }
 
+#rules p {
+    font-size: 3vh;
+    font-weight: bold;
+    text-align: justify;
+}
+
 
 /* .titlegame {
     background: url(../img/banner.png) no-repeat;
