@@ -356,8 +356,7 @@ function drawIt() {
         Swal.fire({
             icon: 'error',
             title: 'You lost',
-            html: 'Redirecting to start',
-            background: 'black',
+            html: 'Redirecting to menu',
             showConfirmButton: false,
             timer: 5000,
         }).then((result) => {
@@ -366,6 +365,7 @@ function drawIt() {
             document.getElementById('bgimage2').style = "display: none";
             document.getElementById('difficulty').style = "display: flex";
         });
+        $(".swal2-modal").css('background', 'transparent');
         $(".swal2-title").css('color', 'white');
         $(".swal2-title").css('font-size', '30px');
         $(".swal2-html-container").css('color', 'white');
@@ -378,8 +378,7 @@ function drawIt() {
         Swal.fire({
             icon: 'success',
             title: 'You won',
-            html: 'Redirecting to start',
-            background: 'black',
+            html: 'Redirecting to menu',
             showConfirmButton: false,
             timer: 5000,
         }).then((result) => {
@@ -388,6 +387,7 @@ function drawIt() {
             document.getElementById('bgimage2').style = "display: none";
             document.getElementById('difficulty').style = "display: flex";
         });
+        $(".swal2-modal").css('background', 'transparent');
         $(".swal2-title").css('color', 'white');
         $(".swal2-title").css('font-size', '30px');
         $(".swal2-html-container").css('color', 'white');
