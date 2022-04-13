@@ -268,7 +268,7 @@ function drawIt() {
                 arrowUP = false;
                 arrowX = WIDTH;
             } else
-                clearInterval(inter);
+                end();
 
             //odboj zogice
         if (y + dy > HEIGHT - r || y + dy < r)
@@ -287,7 +287,7 @@ function drawIt() {
                     lives--;
                     dx = -dx;
                 } else
-                    clearInterval(inter);
+                    end();
         }
         livebar.style.height = lives * 20 + 'px';
         x += dx;
@@ -328,6 +328,10 @@ function drawIt() {
             upDown = false;
         else if (evt.keyCode == 40 || evt.keyCode == 83)
             downDown = false;
+    }
+
+    function end() {
+        clearInterval(inter);
     }
 
     // function init_mouse() {
