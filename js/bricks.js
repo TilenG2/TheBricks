@@ -80,6 +80,8 @@ function drawIt() {
     var knight = new Image();
     knight.src = "img/knight.png";
 
+    var stoneHit = new Audio('sound/Stone_hit2.ogg');
+
     var arrow = new Image();
     arrow.src = "img/arrow1.png";
     var arrowDX = -3,
@@ -216,6 +218,7 @@ function drawIt() {
                 }
 
             }
+            stoneHit.play();
             bricks[row][col]--;
             countToFinish--;
 
