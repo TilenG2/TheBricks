@@ -103,7 +103,7 @@ function drawIt() {
             lives = 2;
             break;
         case 2:
-            lives = 2;
+            lives = 3;
             break;
         case 1:
             lives = 3;
