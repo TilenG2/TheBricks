@@ -47,16 +47,14 @@ function drawIt() {
     var livebar = document.getElementById('health');
     var x = 200,
         y = 200,
-        dx = 4,
-        dy = 1,
+        dx = 8,
+        dy = 2,
         WIDTH,
         HEIGHT,
         r = 12.5,
         ctx,
         upDown = false,
         downDown = false,
-        // canvasMinY,
-        // canvasMaxY,
         paddley,
         paddleh,
         paddlew,
@@ -92,14 +90,14 @@ function drawIt() {
 
     var arrow = new Image();
     arrow.src = "img/arrow1.png";
-    var arrowDX = -3,
+    var arrowDX = -6,
         arrowX,
         arrowY,
         arrowUP = false;
 
     switch (difficulty) {
         case 3:
-            arrowDX = -5;
+            arrowDX = -10;
             lives = 2;
             break;
         case 2:
@@ -112,57 +110,19 @@ function drawIt() {
             break;
     }
 
-    var cannon = new Image();
-    cannon.src = "img/cannon.png";
-    var cannonDX = 5,
-        cannonX = -689;
-
     function init() {
         ctx = $('#canv')[0].getContext("2d");
         WIDTH = $("#canv").width();
         HEIGHT = $("#canv").height();
         init_paddle();
-        // startAnim();
-        return setInterval(draw, 10);
+        return setInterval(draw, 20);
 
-    }
-
-    // function startAnim() {
-    //     while (true) {
-    //         print("anim");
-    //         delay(100);
-    //         ctx.drawImage(cannon, HEIGHT / 2 + 161, cannonX, 689, 323);
-    //         cannonX += cannonDX;
-    //     }
-    // }
-
-    function delay(delayInms) {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve(2);
-            }, delayInms);
-        });
     }
 
     function init_paddle() {
         paddley = HEIGHT / 2;
         paddleh = 121;
         paddlew = 81;
-    }
-
-    function circle(x, y, r, color) {
-        ctx.beginPath();
-        ctx.arc(x, y, r, 0, Math.PI * 2, true);
-        ctx.closePath();
-        ctx.fillStyle = color;
-        ctx.fill();
-    }
-
-    function rect(x, y, w, h) {
-        ctx.beginPath();
-        ctx.rect(x, y, w, h);
-        ctx.closePath();
-        ctx.fill();
     }
 
     function clear() {
@@ -176,51 +136,41 @@ function drawIt() {
         }
         powerupDestroy();
 
-        if (downDown) { //paddel movment arows in omejevanje
-            if ((paddley + paddleh) < HEIGHT) {
-                paddley += 5;
-            } else {
-                paddley = HEIGHT - paddleh;
-            }
-        } else if (upDown) {
-            if ((paddley + paddleh / 4) > 0) {
-                paddley -= 5;
-            } else {
-                paddley = 0 - paddleh / 4;
-            }
-        }
-        ctx.drawImage(knight, 0, paddley, paddlew, paddleh);
-        //rect(0, paddley, paddlew, paddleh); //paddle draw
+        drawPaddle();
 
         //riši opeke
-        for (i = 0; i < NROWS; i++) {
-            for (j = 1; j <= NCOLS; j++) {
-                if (bricks[i][j - 1] == 2) {
-                    // rect((WIDTH - j * (BRICKWIDTH )) ,
-                    //     (i * (BRICKHEIGHT )) ,
-                    //     BRICKWIDTH, BRICKHEIGHT);
-                    ctx.drawImage(brick, (WIDTH - j * (BRICKWIDTH)), (i * (BRICKHEIGHT)), BRICKWIDTH, BRICKHEIGHT);
-                } else if (bricks[i][j - 1] == 1) {
-                    ctx.drawImage(brickBreak, (WIDTH - j * (BRICKWIDTH)), (i * (BRICKHEIGHT)), BRICKWIDTH, BRICKHEIGHT);
-                }
-            }
-        }
+        drawBricks();
 
         //unicevanje opek
+        destroyBricks();
+        //premik puscice
+        arrowMove();
+
+        arrowHit();
+
+        //odboj zogice
+        ballBounce();
+        livebar.style.height = lives * 30 + 'px';
+        x += dx;
+        y += dy;
+    }
+
+    function destroyBricks() {
         beforerow = row;
         rowheight = BRICKHEIGHT; //Smo zadeli opeko?
         colwidth = BRICKWIDTH;
         if (!powerupActive) {
-            row = Math.floor((y + dy * 9.4) / rowheight);
-            col = Math.floor(((WIDTH - x) - dx * 3.1) / colwidth);
+            row = Math.floor((y + dy * 4.7) / rowheight);
+            col = Math.floor(((WIDTH - x) - dx * 1.6) / colwidth);
         } else {
             row = Math.floor((y + dy * 14.1) / rowheight);
             col = Math.floor(((WIDTH - x) - dx * 4.7) / colwidth);
         }
 
-
-        if (row < 0) row = 0;
-        if (row > NROWS - 1) row = NROWS - 1;
+        if (row < 0)
+            row = 0;
+        if (row > NROWS - 1)
+            row = NROWS - 1;
 
         //Če smo zadeli opeko, vrni povratno kroglo in označi v tabeli, da opeke ni več
         if (bricks[row][col] > 0) {
@@ -230,18 +180,7 @@ function drawIt() {
                 } else {
                     dx = -dx;
                 }
-                switch (difficulty) {
-                    case 2:
-                        if (!arrowUP) {
-                            arrowUP = true;
-                            arrowX = WIDTH;
-                            arrowY = (row) * BRICKHEIGHT + BRICKHEIGHT / 2;
-                            woosh.play();
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                arrowGen();
                 stoneHit.play();
             } else
                 stoneHitBig.play();
@@ -250,7 +189,69 @@ function drawIt() {
             countToFinish--;
 
         }
-        //premik puscice
+    }
+
+    function drawPaddle() {
+        if (downDown) { //paddel movment arows in omejevanje
+            if ((paddley + paddleh) < HEIGHT) {
+                paddley += 10;
+            } else {
+                paddley = HEIGHT - paddleh;
+            }
+        } else if (upDown) {
+            if ((paddley + paddleh / 4) > 0) {
+                paddley -= 10;
+            } else {
+                paddley = 0 - paddleh / 4;
+            }
+        }
+        ctx.drawImage(knight, 0, paddley, paddlew, paddleh);
+    }
+
+    function drawBricks() {
+        for (i = 0; i < NROWS; i++) {
+            for (j = 1; j <= NCOLS; j++) {
+                if (bricks[i][j - 1] == 2) {
+                    ctx.drawImage(brick, (WIDTH - j * (BRICKWIDTH)), (i * (BRICKHEIGHT)), BRICKWIDTH, BRICKHEIGHT);
+                } else if (bricks[i][j - 1] == 1) {
+                    ctx.drawImage(brickBreak, (WIDTH - j * (BRICKWIDTH)), (i * (BRICKHEIGHT)), BRICKWIDTH, BRICKHEIGHT);
+                }
+            }
+        }
+    }
+
+    function ballBounce() {
+        if (y + dy > HEIGHT - r || y + dy < r)
+            dy = -dy;
+
+        if (x + dx > WIDTH - r)
+            dx = -dx;
+        else if ((x + dx - paddlew < r || x + dx - paddlew / 2 < r) && dx < 0) { //odboj od ploscka
+            if (y > (paddley + paddleh / 4) && y < paddley + paddleh) {
+                dy = 6 * ((y - ((paddley + paddleh / 4) + paddleh / 3)) / paddleh);
+                dx = -dx;
+                powerupActive = false;
+                paddelBounceCount++;
+            } else if (x + dx - paddlew / 2 < r)
+                if (lives > 1) {
+                    lives--;
+                    dx = -dx;
+                } else
+                    end();
+        }
+    }
+
+    function arrowHit() {
+        if (arrowX <= paddlew / 1.5 && arrowY > paddley && arrowY < paddley + paddleh)
+            if (lives > 1) {
+                lives--;
+                arrowUP = false;
+                arrowX = WIDTH;
+            } else
+                end();
+    }
+
+    function arrowMove() {
         switch (difficulty) {
             case 2:
                 if (arrowUP) {
@@ -280,37 +281,21 @@ function drawIt() {
             default:
                 break;
         }
+    }
 
-        if (arrowX <= paddlew / 1.5 && arrowY > paddley && arrowY < paddley + paddleh)
-            if (lives > 1) {
-                lives--;
-                arrowUP = false;
-                arrowX = WIDTH;
-            } else
-                end();
-
-            //odboj zogice
-        if (y + dy > HEIGHT - r || y + dy < r)
-            dy = -dy;
-
-        if (x + dx > WIDTH - r)
-            dx = -dx;
-        else if ((x + dx - paddlew < r || x + dx - paddlew / 2 < r) && dx < 0) { //odboj od ploscka
-            if (y > (paddley + paddleh / 4) && y < paddley + paddleh) {
-                dy = 6 * ((y - ((paddley + paddleh / 4) + paddleh / 3)) / paddleh);
-                dx = -dx;
-                powerupActive = false;
-                paddelBounceCount++;
-            } else if (x + dx - paddlew / 2 < r)
-                if (lives > 1) {
-                    lives--;
-                    dx = -dx;
-                } else
-                    end();
+    function arrowGen() {
+        switch (difficulty) {
+            case 2:
+                if (!arrowUP) {
+                    arrowUP = true;
+                    arrowX = WIDTH;
+                    arrowY = (row) * BRICKHEIGHT + BRICKHEIGHT / 2;
+                    woosh.play();
+                }
+                break;
+            default:
+                break;
         }
-        livebar.style.height = lives * 30 + 'px';
-        x += dx;
-        y += dy;
     }
 
     function powerupDestroy() {
@@ -327,10 +312,8 @@ function drawIt() {
         }
         if (powerupActive)
             ctx.drawImage(rock, x - r * 1.5, y - r * 1.5, r * 2 * 1.5, r * 2 * 1.5);
-        // circle(x, y, r, '#cd3019'); // Zogica
         else
             ctx.drawImage(rock, x - r, y - r, r * 2, r * 2);
-        // circle(x, y, r, '#000'); // Zogica
     }
 
     function onKeyDown(evt) {
@@ -365,6 +348,10 @@ function drawIt() {
             document.getElementById('bgimage2').style = "display: none";
             document.getElementById('difficulty').style = "display: flex";
         });
+        swalStyle();
+    }
+
+    function swalStyle() {
         $(".swal2-modal").css('background', 'transparent');
         $(".swal2-title").css('color', 'white');
         $(".swal2-title").css('font-size', '30px');
@@ -387,25 +374,8 @@ function drawIt() {
             document.getElementById('bgimage2').style = "display: none";
             document.getElementById('difficulty').style = "display: flex";
         });
-        $(".swal2-modal").css('background', 'transparent');
-        $(".swal2-title").css('color', 'white');
-        $(".swal2-title").css('font-size', '30px');
-        $(".swal2-html-container").css('color', 'white');
-        $(".swal2-html-container").css('font-size', '25px');
-        $(".swal2-content").css('color', 'white');
+        swalStyle();
     }
-
-    // function init_mouse() {
-    //     canvasMinY = $("#canv").offset().left + (paddleh / 2);
-    //     canvasMaxY = canvasMinY + HEIGHT;
-    // }
-
-    // function onMouseMove(evt) {
-    //     if (evt.pageY > canvasMinY && evt.pageY < canvasMaxY) {
-    //         paddley = evt.pageY - canvasMinY;
-    //     }
-    // }
-
 
     function initbricks() { //inicializacija opek - polnjenje v tabelo
         NROWS = 15;
@@ -425,9 +395,7 @@ function drawIt() {
 
     $(document).keydown(onKeyDown);
     $(document).keyup(onKeyUp);
-    // $(document).mousemove(onMouseMove);
 
     var inter = init();
-    // init_mouse();
     initbricks();
 }
