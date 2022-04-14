@@ -150,7 +150,7 @@ function drawIt() {
 
         //odboj zogice
         ballBounce();
-        livebar.style.height = lives * 30 + 'px';
+        livebar.style.width = lives * 30 + 'px';
         x += dx;
         y += dy;
     }
@@ -235,6 +235,7 @@ function drawIt() {
             } else if (x + dx - paddlew / 2 < r)
                 if (lives > 1) {
                     lives--;
+                    powerupActive = false;
                     dx = -dx;
                 } else
                     end();
