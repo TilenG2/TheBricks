@@ -163,8 +163,8 @@ function drawIt() {
             row = Math.floor((y + dy * 4.7) / rowheight);
             col = Math.floor(((WIDTH - x) - dx * 1.6) / colwidth);
         } else {
-            row = Math.floor((y + dy * 14.1) / rowheight);
-            col = Math.floor(((WIDTH - x) - dx * 4.7) / colwidth);
+            row = Math.floor((y + dy * 7.1) / rowheight);
+            col = Math.floor(((WIDTH - x) - dx * 2.3) / colwidth);
         }
 
         if (row < 0)
