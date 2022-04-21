@@ -36,7 +36,21 @@ function diffselect(dif) {
             break;
     }
 }
+var background = new Audio('sound/Vopna.mp3');
+background.volume = 0.3;
 
+function startMusic() {
+    if (typeof background.loop == 'boolean') {
+        background.loop = true;
+    } else {
+        background.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+    }
+    background.play();
+}
+startMusic();
 
 function drawIt() {
     document.getElementById('game').style = "display: flex";
@@ -92,13 +106,11 @@ function drawIt() {
     var stoneHit = new Audio('sound/Stone_hit2.ogg');
     var stoneHitBig = new Audio('sound/Stone_dig2.ogg');
     var woosh = new Audio('sound/woosh.mp3');
-    var background = new Audio('sound/Vopna.mp3');
 
     woosh.volume = 0.2;
     stoneHitBig.volume = 0.3;
     stoneHit.volume = 0.3;
-    background.volume = 0.3;
-    background.play();
+
 
     var arrow = new Image();
     arrow.src = "img/arrow1.png";
