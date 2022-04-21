@@ -95,7 +95,7 @@ function drawIt() {
         powerupPress = false,
         powerbarSize = 10,
         lives,
-        shield = 3.5;
+        shield = 4;
 
     var brick = new Image();
     brick.src = "img/deepslate_brick.png";
@@ -111,8 +111,8 @@ function drawIt() {
     var woosh = new Audio('sound/woosh.mp3');
 
     woosh.volume = 0.2;
-    stoneHitBig.volume = 0.3;
-    stoneHit.volume = 0.3;
+    stoneHitBig.volume = 0.4;
+    stoneHit.volume = 0.4;
 
 
     var arrow = new Image();
@@ -210,35 +210,27 @@ function drawIt() {
 
         //Če smo zadeli opeko, vrni povratno kroglo in označi v tabeli, da opeke ni več
         if (bricks[row][col] > 0) {
-            if (!powerupActive) {
-                if (beforerow < row || beforerow > row) {
-                    dy = -dy;
-                } else {
-                    dx = -dx;
-                }
-                arrowGen();
-                stoneHit.play();
-            } else
-                stoneHitBig.play();
-
-            bricks[row][col]--;
-            countToFinish--;
+            paddleBounce(row, col);
 
         } else if (bricks[rowmax][colmax] > 0) {
-            if (!powerupActive) {
-                if (beforerowmax < rowmax || beforerowmax > rowmax) {
-                    dy = -dy;
-                } else {
-                    dx = -dx;
-                }
-                arrowGen();
-                stoneHit.play();
-            } else
-                stoneHitBig.play();
-
-            bricks[rowmax][colmax]--;
-            countToFinish--;
+            paddleBounce(rowmax, colmax);
         }
+    }
+
+    function paddleBounce(rowf, colf) {
+        if (!powerupActive) {
+            if (beforerow < rowf || beforerow > rowf) {
+                dy = -dy;
+            } else {
+                dx = -dx;
+            }
+            arrowGen();
+            stoneHit.play();
+        } else
+            stoneHitBig.play();
+
+        bricks[rowf][colf]--;
+        countToFinish--;
     }
 
     function drawPaddle() {
