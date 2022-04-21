@@ -210,16 +210,16 @@ function drawIt() {
 
         //Če smo zadeli opeko, vrni povratno kroglo in označi v tabeli, da opeke ni več
         if (bricks[row][col] > 0) {
-            paddleBounce(row, col);
+            paddleBounce(beforerow, row, col);
 
         } else if (bricks[rowmax][colmax] > 0) {
-            paddleBounce(rowmax, colmax);
+            paddleBounce(beforerowmax, rowmax, colmax);
         }
     }
 
-    function paddleBounce(rowf, colf) {
+    function paddleBounce(brow, rowf, colf) {
         if (!powerupActive) {
-            if (beforerow < rowf || beforerow > rowf) {
+            if (brow < rowf || brow > rowf) {
                 dy = -dy;
             } else {
                 dx = -dx;
@@ -393,11 +393,12 @@ function drawIt() {
             html: 'Redirecting to menu',
             showConfirmButton: false,
             timer: 5000,
-        }).then((result) => {
+        }).then(() => {
             document.getElementById('menu').style = "display: flex";
             document.getElementById('game').style = "display: none";
             document.getElementById('bgimage2').style = "display: none";
             document.getElementById('difficulty').style = "display: flex";
+            powerbar.style.width = '100%';
         });
         swalStyle();
     }
@@ -424,6 +425,7 @@ function drawIt() {
             document.getElementById('game').style = "display: none";
             document.getElementById('bgimage2').style = "display: none";
             document.getElementById('difficulty').style = "display: flex";
+            powerbar.style.width = '100%';
         });
         swalStyle();
     }
