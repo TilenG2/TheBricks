@@ -195,10 +195,10 @@ function drawIt() {
             rowmax = Math.floor((y - r * Ramplify * ((dy > 0) ? 1 : -1)) / rowheight);
             colmax = Math.floor(((WIDTH - x) - r * Ramplify * ((dx > 0) ? 1 : -1)) / colwidth);
         } else {
-            row = Math.floor((y + r * Ramplify * 1.5 * ((dy > 0) ? 1 : -1)) / rowheight);
-            col = Math.floor(((WIDTH - x) - r * Ramplify * 1.5 * ((dx > 0) ? 1 : -1)) / colwidth);
-            rowmax = Math.floor((y - r * Ramplify * 1.5 * ((dy > 0) ? 1 : -1)) / rowheight);
-            colmax = Math.floor(((WIDTH - x) - r * Ramplify * 1.5 * ((dx > 0) ? 1 : -1)) / colwidth);
+            row = Math.floor((y + r * 1.5 * ((dy > 0) ? 1 : -1)) / rowheight);
+            col = Math.floor(((WIDTH - x) - r * 1.5 * ((dx > 0) ? 1 : -1)) / colwidth);
+            rowmax = Math.floor((y - r * 1.5 * ((dy > 0) ? 1 : -1)) / rowheight);
+            colmax = Math.floor(((WIDTH - x) - r * 1.5 * ((dx > 0) ? 1 : -1)) / colwidth);
         }
 
         if (row < 0)
