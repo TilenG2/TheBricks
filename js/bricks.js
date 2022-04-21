@@ -30,15 +30,23 @@ function diffselect(dif) {
     switch (dif) {
         case 1:
             document.getElementById("easy").classList.add("selected");
+            lives = 3;
             break;
         case 2:
             document.getElementById("medium").classList.add("selected");
+            lives = 3;
             break;
         case 3:
             document.getElementById("hard").classList.add("selected");
+            lives = 2;
             break;
     }
 }
+
+function giveLives(temp) {
+    lives = (temp > 19) ? 19 : temp;
+}
+var lives = 3;
 var background = new Audio('sound/Vopna.mp3');
 background.volume = 0.2;
 
@@ -95,7 +103,6 @@ function drawIt() {
         powerupActive = false,
         powerupPress = false,
         powerbarSize = 10,
-        lives,
         shield = 4;
 
     var brick = new Image();
@@ -126,14 +133,7 @@ function drawIt() {
     switch (difficulty) {
         case 3:
             arrowDX = -10;
-            lives = 2;
             dx = 10;
-            break;
-        case 2:
-            lives = 3;
-            break;
-        case 1:
-            lives = 3;
             break;
         default:
             break;
@@ -401,6 +401,7 @@ function drawIt() {
             document.getElementById('bgimage2').style = "display: none";
             document.getElementById('difficulty').style = "display: flex";
             powerbar.style.width = '100%';
+            resetLives();
         });
         $(".swal2-modal").css('background', 'transparent');
         $(".swal2-title").css('color', 'white');
@@ -408,6 +409,20 @@ function drawIt() {
         $(".swal2-html-container").css('color', 'white');
         $(".swal2-html-container").css('font-size', '25px');
         $(".swal2-content").css('color', 'white');
+    }
+
+    function resetLives() {
+        switch (difficulty) {
+            case 1:
+            case 2:
+                lives = 3;
+                break;
+            case 3:
+                lives = 2;
+                break;
+            default:
+                break;
+        }
     }
 
     function win() {
@@ -425,6 +440,7 @@ function drawIt() {
             document.getElementById('bgimage2').style = "display: none";
             document.getElementById('difficulty').style = "display: flex";
             powerbar.style.width = '100%';
+            resetLives();
 
         });
         $(".swal2-modal").css('background', 'transparent');
