@@ -126,6 +126,7 @@ function drawIt() {
         case 3:
             arrowDX = -10;
             lives = 2;
+            dx = 10;
             break;
         case 2:
             lives = 3;
@@ -270,7 +271,7 @@ function drawIt() {
             dx = -dx;
         else if ((x + dx - paddlew < r || x + dx - paddlew / 2 < r) && dx < 0) { //odboj od ploscka
             if (y > (paddley + paddleh / shield) && y < paddley + paddleh) {
-                dy = 6 * ((y - ((paddley + paddleh / shield) + paddleh / 3)) / paddleh);
+                dy = 6 * ((y - ((paddley + paddleh / shield) + paddleh / 2.5)) / paddleh);
                 dx = -dx;
                 powerupActive = false;
                 if (powerupPress) {
@@ -400,10 +401,6 @@ function drawIt() {
             document.getElementById('difficulty').style = "display: flex";
             powerbar.style.width = '100%';
         });
-        swalStyle();
-    }
-
-    function swalStyle() {
         $(".swal2-modal").css('background', 'transparent');
         $(".swal2-title").css('color', 'white');
         $(".swal2-title").css('font-size', '30px');
@@ -416,6 +413,7 @@ function drawIt() {
         clearInterval(inter);
         Swal.fire({
             icon: 'success',
+            iconHtml: '<i class="fa fa-check"></i>',
             title: 'You won',
             html: 'Redirecting to menu',
             showConfirmButton: false,
@@ -426,8 +424,14 @@ function drawIt() {
             document.getElementById('bgimage2').style = "display: none";
             document.getElementById('difficulty').style = "display: flex";
             powerbar.style.width = '100%';
+
         });
-        swalStyle();
+        $(".swal2-modal").css('background', 'transparent');
+        $(".swal2-title").css('color', 'white');
+        $(".swal2-title").css('font-size', '30px');
+        $(".swal2-html-container").css('color', 'white');
+        $(".swal2-html-container").css('font-size', '25px');
+        $(".swal2-content").css('color', 'white');
     }
 
     function initbricks() { //inicializacija opek - polnjenje v tabelo
@@ -443,7 +447,7 @@ function drawIt() {
                 countToFinish += bricks[i][j];
             }
         }
-        // countToFinish *=0.95;
+        // countToFinish *= 0.05;
     }
 
     $(document).keydown(onKeyDown);
