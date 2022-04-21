@@ -1,10 +1,12 @@
 function credits() {
+    startMusic();
     document.getElementById('menu').style = "display: none";
     document.getElementById('difficulty').style = "display: none";
     document.getElementById('credits').style = "display: flex";
 }
 
 function rules() {
+    startMusic();
     document.getElementById('menu').style = "display: none";
     document.getElementById('difficulty').style = "display: none";
     document.getElementById('rules').style = "display: flex";
@@ -19,6 +21,7 @@ function back() {
 var difficulty = 2;
 
 function diffselect(dif) {
+    startMusic();
     difficulty = dif;
     document.getElementById("easy").classList.remove("selected");
     document.getElementById("medium").classList.remove("selected");
@@ -50,9 +53,9 @@ function startMusic() {
     }
     background.play();
 }
-startMusic();
 
 function drawIt() {
+    startMusic();
     document.getElementById('game').style = "display: flex";
     document.getElementById('menu').style = "display: none";
     document.getElementById('difficulty').style = "display: none";
