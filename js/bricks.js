@@ -40,7 +40,7 @@ function diffselect(dif) {
     }
 }
 var background = new Audio('sound/Vopna.mp3');
-background.volume = 0.3;
+background.volume = 0.2;
 
 function startMusic() {
     if (typeof background.loop == 'boolean') {
@@ -69,6 +69,7 @@ function drawIt() {
         WIDTH,
         HEIGHT,
         r = 12.5,
+        Ramplify = 1.2,
         ctx,
         upDown = false,
         downDown = false,
@@ -189,15 +190,15 @@ function drawIt() {
         rowheight = BRICKHEIGHT; //Smo zadeli opeko?
         colwidth = BRICKWIDTH;
         if (!powerupActive) {
-            row = Math.floor((y + r * ((dy > 0) ? 1 : -1)) / rowheight);
-            col = Math.floor(((WIDTH - x) - r * ((dx > 0) ? 1 : -1)) / colwidth);
-            rowmax = Math.floor((y - r * ((dy > 0) ? 1 : -1)) / rowheight);
-            colmax = Math.floor(((WIDTH - x) - r * ((dx > 0) ? 1 : -1)) / colwidth);
+            row = Math.floor((y + r * Ramplify * ((dy > 0) ? 1 : -1)) / rowheight);
+            col = Math.floor(((WIDTH - x) - r * Ramplify * ((dx > 0) ? 1 : -1)) / colwidth);
+            rowmax = Math.floor((y - r * Ramplify * ((dy > 0) ? 1 : -1)) / rowheight);
+            colmax = Math.floor(((WIDTH - x) - r * Ramplify * ((dx > 0) ? 1 : -1)) / colwidth);
         } else {
-            row = Math.floor((y + r * 1.5 * ((dy > 0) ? 1 : -1)) / rowheight);
-            col = Math.floor(((WIDTH - x) - r * 1.5 * ((dx > 0) ? 1 : -1)) / colwidth);
-            rowmax = Math.floor((y - r * 1.5 * ((dy > 0) ? 1 : -1)) / rowheight);
-            colmax = Math.floor(((WIDTH - x) - r * 1.5 * ((dx > 0) ? 1 : -1)) / colwidth);
+            row = Math.floor((y + r * Ramplify * 1.5 * ((dy > 0) ? 1 : -1)) / rowheight);
+            col = Math.floor(((WIDTH - x) - r * Ramplify * 1.5 * ((dx > 0) ? 1 : -1)) / colwidth);
+            rowmax = Math.floor((y - r * Ramplify * 1.5 * ((dy > 0) ? 1 : -1)) / rowheight);
+            colmax = Math.floor(((WIDTH - x) - r * Ramplify * 1.5 * ((dx > 0) ? 1 : -1)) / colwidth);
         }
 
         if (row < 0)
