@@ -64,16 +64,21 @@ function drawIt() {
         BRICKWIDTH,
         BRICKHEIGHT,
         row,
+        rowmax,
         col,
+        colmax,
         beforerow,
+        beforerowmax,
         rowheight,
         colwidth,
         countToFinish = 0,
         paddelBounceCount = 0,
         powerup = false,
         powerupActive = false,
+        powerupPress = false,
         powerbarSize = 10,
-        lives;
+        lives,
+        shield = 3.5;
 
     var brick = new Image();
     brick.src = "img/deepslate_brick.png";
@@ -87,6 +92,13 @@ function drawIt() {
     var stoneHit = new Audio('sound/Stone_hit2.ogg');
     var stoneHitBig = new Audio('sound/Stone_dig2.ogg');
     var woosh = new Audio('sound/woosh.mp3');
+    var background = new Audio('sound/Vopna.mp3');
+
+    woosh.volume = 0.2;
+    stoneHitBig.volume = 0.3;
+    stoneHit.volume = 0.3;
+    background.volume = 0.3;
+    background.play();
 
     var arrow = new Image();
     arrow.src = "img/arrow1.png";
@@ -150,27 +162,36 @@ function drawIt() {
 
         //odboj zogice
         ballBounce();
-        livebar.style.width = lives * 30 + 'px';
+        livebar.style.width = lives * 40 + 'px';
         x += dx;
         y += dy;
     }
 
     function destroyBricks() {
         beforerow = row;
+        beforerowmax = rowmax;
         rowheight = BRICKHEIGHT; //Smo zadeli opeko?
         colwidth = BRICKWIDTH;
         if (!powerupActive) {
-            row = Math.floor((y + dy * 4.7) / rowheight);
-            col = Math.floor(((WIDTH - x) - dx * 1.6) / colwidth);
+            row = Math.floor((y + r * ((dy > 0) ? 1 : -1)) / rowheight);
+            col = Math.floor(((WIDTH - x) - r * ((dx > 0) ? 1 : -1)) / colwidth);
+            rowmax = Math.floor((y - r * ((dy > 0) ? 1 : -1)) / rowheight);
+            colmax = Math.floor(((WIDTH - x) - r * ((dx > 0) ? 1 : -1)) / colwidth);
         } else {
-            row = Math.floor((y + dy * 7.1) / rowheight);
-            col = Math.floor(((WIDTH - x) - dx * 2.3) / colwidth);
+            row = Math.floor((y + r * 1.5 * ((dy > 0) ? 1 : -1)) / rowheight);
+            col = Math.floor(((WIDTH - x) - r * 1.5 * ((dx > 0) ? 1 : -1)) / colwidth);
+            rowmax = Math.floor((y - r * 1.5 * ((dy > 0) ? 1 : -1)) / rowheight);
+            colmax = Math.floor(((WIDTH - x) - r * 1.5 * ((dx > 0) ? 1 : -1)) / colwidth);
         }
 
         if (row < 0)
             row = 0;
         if (row > NROWS - 1)
             row = NROWS - 1;
+        if (rowmax < 0)
+            rowmax = 0;
+        if (rowmax > NROWS - 1)
+            rowmax = NROWS - 1;
 
         //Če smo zadeli opeko, vrni povratno kroglo in označi v tabeli, da opeke ni več
         if (bricks[row][col] > 0) {
@@ -188,6 +209,20 @@ function drawIt() {
             bricks[row][col]--;
             countToFinish--;
 
+        } else if (bricks[rowmax][colmax] > 0) {
+            if (!powerupActive) {
+                if (beforerowmax < rowmax || beforerowmax > rowmax) {
+                    dy = -dy;
+                } else {
+                    dx = -dx;
+                }
+                arrowGen();
+                stoneHit.play();
+            } else
+                stoneHitBig.play();
+
+            bricks[rowmax][colmax]--;
+            countToFinish--;
         }
     }
 
@@ -199,10 +234,10 @@ function drawIt() {
                 paddley = HEIGHT - paddleh;
             }
         } else if (upDown) {
-            if ((paddley + paddleh / 4) > 0) {
+            if ((paddley + paddleh / shield) > 0) {
                 paddley -= 10;
             } else {
-                paddley = 0 - paddleh / 4;
+                paddley = 0 - paddleh / shield;
             }
         }
         ctx.drawImage(knight, 0, paddley, paddlew, paddleh);
@@ -227,15 +262,23 @@ function drawIt() {
         if (x + dx > WIDTH - r)
             dx = -dx;
         else if ((x + dx - paddlew < r || x + dx - paddlew / 2 < r) && dx < 0) { //odboj od ploscka
-            if (y > (paddley + paddleh / 4) && y < paddley + paddleh) {
-                dy = 6 * ((y - ((paddley + paddleh / 4) + paddleh / 3)) / paddleh);
+            if (y > (paddley + paddleh / shield) && y < paddley + paddleh) {
+                dy = 6 * ((y - ((paddley + paddleh / shield) + paddleh / 3)) / paddleh);
                 dx = -dx;
                 powerupActive = false;
+                if (powerupPress) {
+                    powerupActive = true;
+                    powerupPress = false;
+                }
                 paddelBounceCount++;
             } else if (x + dx - paddlew / 2 < r)
                 if (lives > 1) {
                     lives--;
                     powerupActive = false;
+                    if (powerupPress) {
+                        powerupActive = true;
+                        powerupPress = false;
+                    }
                     dx = -dx;
                 } else
                     end();
@@ -323,8 +366,8 @@ function drawIt() {
         else if (evt.keyCode == 40 || evt.keyCode == 83)
             downDown = true;
         else if (evt.keyCode == 32 && powerup) {
-            powerupActive = true;
-            paddelBounceCount = 0;
+            powerupPress = true;
+            paddelBounceCount = -1;
         }
     }
 
