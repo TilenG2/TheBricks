@@ -77,7 +77,6 @@ function drawIt() {
         WIDTH,
         HEIGHT,
         r = 12.5,
-        Ramplify = 1.2,
         ctx,
         upDown = false,
         downDown = false,
@@ -113,6 +112,8 @@ function drawIt() {
     knight.src = "img/knight.png";
     var rock = new Image();
     rock.src = "img/rock.png"
+    var cannonball = new Image();
+    cannonball.src = "img/Cannon_Ball.png"
 
     var stoneHit = new Audio('sound/Stone_hit2.ogg');
     var stoneHitBig = new Audio('sound/Stone_dig2.ogg');
@@ -190,10 +191,10 @@ function drawIt() {
         rowheight = BRICKHEIGHT; //Smo zadeli opeko?
         colwidth = BRICKWIDTH;
         if (!powerupActive) {
-            row = Math.floor((y + r * Ramplify * ((dy > 0) ? 1 : -1)) / rowheight);
-            col = Math.floor(((WIDTH - x) - r * Ramplify * ((dx > 0) ? 1 : -1)) / colwidth);
-            rowmax = Math.floor((y - r * Ramplify * ((dy > 0) ? 1 : -1)) / rowheight);
-            colmax = Math.floor(((WIDTH - x) - r * Ramplify * ((dx > 0) ? 1 : -1)) / colwidth);
+            row = Math.floor((y + r * ((dy > 0) ? 1 : -1)) / rowheight);
+            col = Math.floor(((WIDTH - x) - r * ((dx > 0) ? 1 : -1)) / colwidth);
+            rowmax = Math.floor((y - r * ((dy > 0) ? 1 : -1)) / rowheight);
+            colmax = Math.floor(((WIDTH - x) - r * ((dx > 0) ? 1 : -1)) / colwidth);
         } else {
             row = Math.floor((y + r * 1.5 * ((dy > 0) ? 1 : -1)) / rowheight);
             col = Math.floor(((WIDTH - x) - r * 1.5 * ((dx > 0) ? 1 : -1)) / colwidth);
